@@ -1,5 +1,7 @@
 ﻿Class MainWindow
 
+    Private MessageBox As New Xceed.Wpf.Toolkit.MessageBox
+
     Private FilePath As String = ""
     Private FileContent As Object
 
@@ -81,8 +83,9 @@
         TotalStringsLabel.Content = OriginalStrings.Count - 1
 
         TranslatedString.Focus()
-        FilePathLabel.Text = FilePath
+        PlaceTheCaret()
 
+        FilePathLabel.Text = FilePath
         SavePath = FilePath
 
     End Sub
@@ -96,6 +99,8 @@
 
             TranslatedString.Text = TranslatedStrings(CurrentString)
             CurrentStringLabel.Content = CurrentString
+
+            PlaceTheCaret()
         End If
     End Sub
 
@@ -109,7 +114,17 @@
             TranslatedString.Text = TranslatedStrings(CurrentString)
 
             CurrentStringLabel.Content = CurrentString
+
         End If
+    End Sub
+
+    Private Sub PlaceTheCaret()
+        Dim split As String() = TranslatedString.Text.Split(New [Char]() {":"c})
+        For Each s As String In split
+            TranslatedString.CaretIndex = s.Length + 3
+            Exit For
+
+        Next
     End Sub
 
     Private Sub NextButton_Click(sender As Object, e As RoutedEventArgs) Handles NextButton.Click
@@ -118,6 +133,10 @@
 
     Private Sub PreviousButton_Click(sender As Object, e As RoutedEventArgs) Handles PreviousButton.Click
         GoPrevious()
+    End Sub
+
+    Private Sub TranslatedString_KeyUp(sender As Object, e As KeyEventArgs) Handles TranslatedString.KeyUp
+        If e.Key = Key.Down Then PlaceTheCaret()
     End Sub
 
     Private Sub TranslatedString_KeyDown(sender As Object, e As KeyEventArgs) Handles TranslatedString.PreviewKeyDown
@@ -173,11 +192,12 @@
     End Sub
 
     Private Sub AboutButton_Click(sender As Object, e As RoutedEventArgs) Handles AboutButton.Click
-        MessageBox.Show("Made by vistaero. You can contact me via Twitter. @vistaero", "About", MessageBoxButton.OK, MessageBoxImage.Information)
+
+        MessageBox.Show("Made by vistaero. You can contact me via Twitter. @vistaero" & vbNewLine & "Source code: https://github.com/vistaero/TardisPluginLanguageFileTranslator", "About", MessageBoxButton.OK, MessageBoxImage.Information)
     End Sub
 
     Private Sub Window_Loaded(sender As Object, e As RoutedEventArgs)
-        Dim MessageBox As New Xceed.Wpf.Toolkit.MessageBox
+
         MessageBox.CaptionIcon = Nothing
         If My.Settings.LastFilePath <> "" And System.IO.File.Exists(My.Settings.LastFilePath) = True Then
             If MessageBox.Show("Do you want to load the last file you have open?", "", MessageBoxButton.YesNo) = MessageBoxResult.Yes Then
@@ -196,8 +216,6 @@
     End Sub
 
     Private Sub Window_Closing(sender As Object, e As ComponentModel.CancelEventArgs)
-        Dim MessageBox As New Xceed.Wpf.Toolkit.MessageBox
-
         If FilePath <> "" And Saved = False Then
             Dim result As MessageBoxResult = MessageBox.Show("Save before exit?", "", MessageBoxButton.YesNoCancel)
             Select Case result

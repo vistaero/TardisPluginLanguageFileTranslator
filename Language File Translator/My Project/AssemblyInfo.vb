@@ -11,10 +11,10 @@ Imports System.Windows
 
 ' Revisar los valores de los atributos del ensamblado
 
-<Assembly: AssemblyTitle("YML_Translator")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("YML_Translator")> 
+<Assembly: AssemblyTitle("Language File Translator")> 
+<Assembly: AssemblyDescription("Language File Translator - For TARDIS Plugin")> 
+<Assembly: AssemblyCompany("vistaero")> 
+<Assembly: AssemblyProduct("Language_File_Translator")> 
 <Assembly: AssemblyCopyright("Copyright ©  2014")> 
 <Assembly: AssemblyTrademark("")> 
 <Assembly: ComVisible(false)>
