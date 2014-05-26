@@ -1,0 +1,31 @@
+﻿<Window x:Class="MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Language File Translator - For TARDIS Plugin" Height="350" Width="570" MinWidth="570" MinHeight="150" WindowStartupLocation="CenterScreen" Icon="ico.ico" Loaded="Window_Loaded" Closing="Window_Closing">
+    <DockPanel>
+        <ToolBar DockPanel.Dock="Top" Height="27" Margin="-10 0 -15 0">
+            <Button Margin="5 0 0 0" x:Name="LoadButton">Load File</Button>
+            <Separator/>
+            <Button x:Name="PreviousButton" IsEnabled ="False" ToolTip="Down Arrow Key">Previous</Button>
+            <Button x:Name="NextButton" IsEnabled="False" ToolTip="Up Arrow Key">Next</Button>
+            <Separator/>
+            <Button x:Name="CurrentStringLabel" IsEnabled="False" Foreground="Black">0</Button>
+            <Button IsEnabled="false" Foreground="black"> of </Button>
+            <Button x:Name="TotalStringsLabel" IsEnabled="False" Foreground="black">0</Button>
+            <Separator/>
+            <Button x:Name="SaveAsButton" IsEnabled="false">Save As</Button>
+            <Button x:Name="SaveButton" IsEnabled="False" ToolTip="Ctrl + S">Save</Button>
+            <Separator/>
+            <Button x:Name="AboutButton" HorizontalAlignment="Right">About</Button>
+
+        </ToolBar>
+        <TextBlock DockPanel.Dock="Top" Margin="0 5 0 0" FontFamily="Calibri" FontStyle="Italic" TextAlignment="Center" Text="Do not remove or change '%s' as these are needed to insert names, commands and config options." />
+        <TextBlock DockPanel.Dock="Top" Margin="0" FontFamily="Calibri" FontStyle="Italic" TextAlignment="Center" Text="Remember to save a backup of the file before using this application." />
+
+        <TextBox x:Name="OriginalString" BorderThickness="0" IsReadOnly="true" Foreground="Chocolate" DockPanel.Dock="Top" Margin="0 5 0 0" FontFamily="Calibri Light" TextWrapping="Wrap" FontSize="16" TextAlignment="Center">Here will go the original string.</TextBox>
+        <TextBlock DockPanel.Dock="Bottom" Margin="3, 2" x:Name="FilePathLabel" FontFamily="Calibri Light" FontSize="14">No file selected</TextBlock>
+
+        <TextBox x:Name="TranslatedString" Margin="0 5 0 0" BorderThickness="0" FontFamily="Calibri Light" TextWrapping="Wrap" FontSize="16" TextAlignment="Center">Here you will write the translation.</TextBox>
+        
+    </DockPanel>
+</Window>
