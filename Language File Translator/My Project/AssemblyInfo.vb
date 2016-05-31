@@ -14,8 +14,8 @@ Imports System.Windows
 <Assembly: AssemblyTitle("Language File Translator")> 
 <Assembly: AssemblyDescription("Language File Translator - For TARDIS Plugin")> 
 <Assembly: AssemblyCompany("vistaero")> 
-<Assembly: AssemblyProduct("Language_File_Translator")> 
-<Assembly: AssemblyCopyright("Copyright ©  2014")> 
+<Assembly: AssemblyProduct("Language_File_Translator")>
+<Assembly: AssemblyCopyright("Copyright © 2016")>
 <Assembly: AssemblyTrademark("")> 
 <Assembly: ComVisible(false)>
 

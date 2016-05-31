@@ -4,28 +4,99 @@
     Title="Language File Translator - For TARDIS Plugin" Height="350" Width="570" MinWidth="570" MinHeight="150" WindowStartupLocation="CenterScreen" Icon="ico.ico" Loaded="Window_Loaded" Closing="Window_Closing">
     <DockPanel>
         <ToolBar DockPanel.Dock="Top" Height="27" Margin="-10 0 -15 0">
-            <Button Margin="5 0 0 0" x:Name="LoadButton">Load File</Button>
+
+            <Button Margin="5 0 0 0" x:Name="LoadButton">Select Language Folder</Button>
             <Separator/>
             <Button x:Name="PreviousButton" IsEnabled ="False" ToolTip="Down Arrow Key">Previous</Button>
             <Button x:Name="NextButton" IsEnabled="False" ToolTip="Up Arrow Key">Next</Button>
             <Separator/>
-            <Button x:Name="CurrentStringLabel" IsEnabled="False" Foreground="Black">0</Button>
+            <TextBox x:Name="CurrentStringLabel" Foreground="Black" IsEnabled="False">0</TextBox>
             <Button IsEnabled="false" Foreground="black"> of </Button>
             <Button x:Name="TotalStringsLabel" IsEnabled="False" Foreground="black">0</Button>
             <Separator/>
-            <Button x:Name="SaveAsButton" IsEnabled="false">Save As</Button>
             <Button x:Name="SaveButton" IsEnabled="False" ToolTip="Ctrl + S">Save</Button>
             <Separator/>
-            <Button x:Name="AboutButton" HorizontalAlignment="Right">About</Button>
+            <Button x:Name="AboutButton">About</Button>
+            <Separator/>
 
         </ToolBar>
-        <TextBlock DockPanel.Dock="Top" Margin="0 5 0 0" FontFamily="Calibri" FontStyle="Italic" TextAlignment="Center" Text="Do not remove or change '%s' as these are needed to insert names, commands and config options." />
-        <TextBlock DockPanel.Dock="Top" Margin="0" FontFamily="Calibri" FontStyle="Italic" TextAlignment="Center" Text="Remember to save a backup of the file before using this application." />
+        <TextBlock DockPanel.Dock="Top" Margin="0 5 0 0" FontFamily="Calibri" FontStyle="Italic" TextAlignment="Center" Text="Remember to save backups periodically while using this application." FontWeight="Bold" />
+        <TextBlock DockPanel.Dock="Top" Margin="0" FontFamily="Calibri" FontStyle="Italic" TextAlignment="Center" Text="Do not remove or change '%s' as these are needed to insert names, commands and config options." />
+        <TextBlock DockPanel.Dock="Top" Margin="0 0 0 5" FontFamily="Calibri" FontStyle="Italic" TextAlignment="Center" Text="Remember to SAVE before opening another language file." FontWeight="Bold" />
 
-        <TextBox x:Name="OriginalString" BorderThickness="0" IsReadOnly="true" Foreground="Chocolate" DockPanel.Dock="Top" Margin="0 5 0 0" FontFamily="Calibri Light" TextWrapping="Wrap" FontSize="16" TextAlignment="Center">Here will go the original string.</TextBox>
-        <TextBlock DockPanel.Dock="Bottom" Margin="3, 2" x:Name="FilePathLabel" FontFamily="Calibri Light" FontSize="14">No file selected</TextBlock>
 
-        <TextBox x:Name="TranslatedString" Margin="0 5 0 0" BorderThickness="0" FontFamily="Calibri Light" TextWrapping="Wrap" FontSize="16" TextAlignment="Center">Here you will write the translation.</TextBox>
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="110" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Grid.Column="0">
+                <Button x:Name="OpenLangFolder" DockPanel.Dock="Top" Padding="2" Background="#FFEEF5FD">Open Folder</Button>
+                <ComboBox x:Name="AddLanguageCombobox" ToolTip="Add Language" DockPanel.Dock="Bottom" Text="Add Language" SelectedIndex="0">
+                    <ComboBoxItem Content="Add Language"/>
+                    <ComboBoxItem Content="ar"/>
+                    <ComboBoxItem Content="bg"/>
+                    <ComboBoxItem Content="ca"/>
+                    <ComboBoxItem Content="zh"/>
+                    <ComboBoxItem Content="cs"/>
+                    <ComboBoxItem Content="da"/>
+                    <ComboBoxItem Content="nl"/>
+                    <ComboBoxItem Content="et"/>
+                    <ComboBoxItem Content="fi"/>
+                    <ComboBoxItem Content="fr"/>
+                    <ComboBoxItem Content="de"/>
+                    <ComboBoxItem Content="el"/>
+                    <ComboBoxItem Content="ht"/>
+                    <ComboBoxItem Content="he"/>
+                    <ComboBoxItem Content="hi"/>
+                    <ComboBoxItem Content="mww"/>
+                    <ComboBoxItem Content="hu"/>
+                    <ComboBoxItem Content="id"/>
+                    <ComboBoxItem Content="it"/>
+                    <ComboBoxItem Content="ja"/>
+                    <ComboBoxItem Content="ko"/>
+                    <ComboBoxItem Content="lv"/>
+                    <ComboBoxItem Content="lt"/>
+                    <ComboBoxItem Content="ms"/>
+                    <ComboBoxItem Content="no"/>
+                    <ComboBoxItem Content="fa"/>
+                    <ComboBoxItem Content="pl"/>
+                    <ComboBoxItem Content="pt"/>
+                    <ComboBoxItem Content="ro"/>
+                    <ComboBoxItem Content="ru"/>
+                    <ComboBoxItem Content="sk"/>
+                    <ComboBoxItem Content="sl"/>
+                    <ComboBoxItem Content="es"/>
+                    <ComboBoxItem Content="sv"/>
+                    <ComboBoxItem Content="th"/>
+                    <ComboBoxItem Content="tr"/>
+                    <ComboBoxItem Content="uk"/>
+                    <ComboBoxItem Content="ur"/>
+                    <ComboBoxItem Content="vi"/>
+
+                </ComboBox>
+                <ListBox x:Name="LanguageFilesListBox" Margin="0 0"/>
+                
+            </DockPanel>
+            <DockPanel Grid.Column="2">
+
+                <TextBlock DockPanel.Dock="Bottom" Margin="3" x:Name="FilePathLabel" FontFamily="Calibri Light" FontSize="14" TextWrapping="Wrap"/>
+
+                <StackPanel DockPanel.Dock="Top">
+
+                    <TextBox x:Name="OriginalString" HorizontalAlignment="Center" BorderThickness="0" IsReadOnly="true" Foreground="Chocolate" Margin="0 5 0 0" FontFamily="Calibri Light" TextWrapping="Wrap" FontSize="16" TextAlignment="Center">Here you will see the string in English.</TextBox>
+                    
+                    <TextBox x:Name="TranslatedString" Margin="0 5 0 0" BorderThickness="0" FontFamily="Calibri Light" TextWrapping="Wrap" FontSize="16" TextAlignment="Center">Here you will write the translation.</TextBox>
+                </StackPanel>
+
+            </DockPanel>
+            
+        </Grid>
+        
+        
+
         
     </DockPanel>
 </Window>
