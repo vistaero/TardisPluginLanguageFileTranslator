@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Language File Translator", "Language File Translator\Language File Translator.vbproj", "{4FD461E5-1701-4870-AAAA-1193F11310C7}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "tlTranslator", "tlTranslator\tlTranslator.vbproj", "{2712BD01-7305-4C4F-9633-B2AF99B9F159}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4FD461E5-1701-4870-AAAA-1193F11310C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4FD461E5-1701-4870-AAAA-1193F11310C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4FD461E5-1701-4870-AAAA-1193F11310C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4FD461E5-1701-4870-AAAA-1193F11310C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2712BD01-7305-4C4F-9633-B2AF99B9F159}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2712BD01-7305-4C4F-9633-B2AF99B9F159}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2712BD01-7305-4C4F-9633-B2AF99B9F159}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2712BD01-7305-4C4F-9633-B2AF99B9F159}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

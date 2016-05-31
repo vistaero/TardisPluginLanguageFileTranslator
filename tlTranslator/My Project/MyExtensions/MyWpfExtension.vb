@@ -2,7 +2,7 @@
 
 Namespace My
     ''' <summary>
-    ''' Módulo utilizado para definir las propiedades disponibles en el espacio de nombres My de WPF
+    ''' Module used to define the properties that are available in the My Namespace for WPF
     ''' </summary>
     ''' <remarks></remarks>
     <Global.Microsoft.VisualBasic.HideModuleName()> _
@@ -12,7 +12,7 @@ Namespace My
         Private s_Windows As New ThreadSafeObjectProvider(Of MyWindows)
         Private s_Log As New ThreadSafeObjectProvider(Of Global.Microsoft.VisualBasic.Logging.Log)
         ''' <summary>
-        ''' Devuelve el objeto de aplicación de la aplicación en ejecución
+        ''' Returns the application object for the running application
         ''' </summary>
         <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>  _
         Friend ReadOnly Property Application() As Application
@@ -21,7 +21,7 @@ Namespace My
             End Get
         End Property
         ''' <summary>
-        ''' Devuelve información sobre el equipo host.
+        ''' Returns information about the host computer.
         ''' </summary>
         <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>  _
         Friend ReadOnly Property Computer() As Global.Microsoft.VisualBasic.Devices.Computer
@@ -30,8 +30,8 @@ Namespace My
             End Get
         End Property
         ''' <summary>
-        ''' Devuelve información sobre el usuario actual.  Si desea ejecutar la aplicación con las credenciales 
-        ''' del usuario de Windows actual, llame a My.User.InitializeWithWindowsUser().
+        ''' Returns information for the current user.  If you wish to run the application with the current 
+        ''' Windows user credentials, call My.User.InitializeWithWindowsUser().
         ''' </summary>
         <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>  _
         Friend ReadOnly Property User() As Global.Microsoft.VisualBasic.ApplicationServices.User
@@ -40,7 +40,7 @@ Namespace My
             End Get
         End Property
         ''' <summary>
-        ''' Devuelve el registro de la aplicación. El archivo de configuración de la aplicación puede configurar los agentes de escucha.
+        ''' Returns the application log. The listeners can be configured by the application's configuration file.
         ''' </summary>
         <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>  _
         Friend ReadOnly Property Log() As Global.Microsoft.VisualBasic.Logging.Log
@@ -50,7 +50,7 @@ Namespace My
         End Property
 
         ''' <summary>
-        ''' Devuelve la colección de Windows definida en el proyecto.
+        ''' Returns the collection of Windows defined in the project.
         ''' </summary>
         <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")>  _
         Friend ReadOnly Property Windows() As MyWindows

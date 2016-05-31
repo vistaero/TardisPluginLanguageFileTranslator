@@ -1,5 +1,7 @@
 ﻿Class MainWindow
 
+    Private MessageBox As New Xceed.Wpf.Toolkit.MessageBox
+
     Private PathSeparator As String = IO.Path.DirectorySeparatorChar
 
     Private LanguageFolder As String
@@ -21,14 +23,20 @@
     Private TextToSave As String
 
     Private Sub Window_Loaded(sender As Object, e As RoutedEventArgs)
-        If IO.Directory.Exists(My.Settings.languageFolder) Then
-            LanguageFolder = My.Settings.languageFolder
-            ListFiles()
-            LoadEnglish()
-        Else
-            SelectFolder()
+        Try
+            If IO.Directory.Exists(My.Settings.languageFolder) Then
+                LanguageFolder = My.Settings.languageFolder
+                ListFiles()
+                LoadEnglish()
+            Else
+                SelectFolder()
 
-        End If
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+
 
     End Sub
 
@@ -73,7 +81,6 @@
 
 
 
-
             Else
                 MessageBox.Show("That's not a valid TARDIS Plugin languages folder. ""en.yml"" is missing.", "Not valid", MessageBoxButton.OK, MessageBoxImage.Error)
 
@@ -101,6 +108,9 @@
         LanguageFilesListBox.Items.Refresh()
 
         FilePathLabel.Text = LanguageFolder
+
+        AddLanguageCombobox.IsEnabled = True
+        OpenLangFolder.IsEnabled = True
 
     End Sub
 

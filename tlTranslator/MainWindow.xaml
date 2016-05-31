@@ -1,7 +1,11 @@
 ﻿<Window x:Class="MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Language File Translator - For TARDIS Plugin" Height="350" Width="570" MinWidth="570" MinHeight="150" WindowStartupLocation="CenterScreen" Icon="ico.ico" Loaded="Window_Loaded" Closing="Window_Closing">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:tlTranslator"
+        mc:Ignorable="d"
+        Title="Language File Translator - For TARDIS Plugin" Height="350" Width="570" MinWidth="570" MinHeight="150" WindowStartupLocation="CenterScreen" Icon="ico.ico" Loaded="Window_Loaded" Closing="Window_Closing">
     <DockPanel>
         <ToolBar DockPanel.Dock="Top" Height="27" Margin="-10 0 -15 0">
 
@@ -11,7 +15,7 @@
             <Button x:Name="NextButton" IsEnabled="False" ToolTip="Up Arrow Key">Next</Button>
             <Separator/>
             <TextBox x:Name="CurrentStringLabel" Foreground="Black" IsEnabled="False">0</TextBox>
-            <Button IsEnabled="false" Foreground="black"> of </Button>
+            <Button IsEnabled="false" Foreground="black">of</Button>
             <Button x:Name="TotalStringsLabel" IsEnabled="False" Foreground="black">0</Button>
             <Separator/>
             <Button x:Name="SaveButton" IsEnabled="False" ToolTip="Ctrl + S">Save</Button>
@@ -33,8 +37,8 @@
             </Grid.ColumnDefinitions>
 
             <DockPanel Grid.Column="0">
-                <Button x:Name="OpenLangFolder" DockPanel.Dock="Top" Padding="2" Background="#FFEEF5FD">Open Folder</Button>
-                <ComboBox x:Name="AddLanguageCombobox" ToolTip="Add Language" DockPanel.Dock="Bottom" Text="Add Language" SelectedIndex="0">
+                <Button x:Name="OpenLangFolder" DockPanel.Dock="Top" Padding="2" Background="#FFEEF5FD" IsEnabled="False">Open Folder</Button>
+                <ComboBox x:Name="AddLanguageCombobox" ToolTip="Add Language" DockPanel.Dock="Bottom" Text="Add Language" SelectedIndex="0" IsEnabled="False">
                     <ComboBoxItem Content="Add Language"/>
                     <ComboBoxItem Content="ar"/>
                     <ComboBoxItem Content="bg"/>
@@ -78,7 +82,7 @@
 
                 </ComboBox>
                 <ListBox x:Name="LanguageFilesListBox" Margin="0 0"/>
-                
+
             </DockPanel>
             <DockPanel Grid.Column="2">
 
@@ -87,16 +91,16 @@
                 <StackPanel DockPanel.Dock="Top">
 
                     <TextBox x:Name="OriginalString" HorizontalAlignment="Center" BorderThickness="0" IsReadOnly="true" Foreground="Chocolate" Margin="0 5 0 0" FontFamily="Calibri Light" TextWrapping="Wrap" FontSize="16" TextAlignment="Center">Here you will see the string in English.</TextBox>
-                    
+
                     <TextBox x:Name="TranslatedString" Margin="0 5 0 0" BorderThickness="0" FontFamily="Calibri Light" TextWrapping="Wrap" FontSize="16" TextAlignment="Center">Here you will write the translation.</TextBox>
                 </StackPanel>
 
             </DockPanel>
-            
-        </Grid>
-        
-        
 
-        
+        </Grid>
+
+
+
+
     </DockPanel>
 </Window>

@@ -74,9 +74,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.Language_File_Translator.MySettings
+        Friend ReadOnly Property Settings() As Global.tlTranslator.MySettings
             Get
-                Return Global.Language_File_Translator.MySettings.Default
+                Return Global.tlTranslator.MySettings.Default
             End Get
         End Property
     End Module
