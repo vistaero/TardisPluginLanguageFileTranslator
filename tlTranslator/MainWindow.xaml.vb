@@ -194,9 +194,12 @@
     Private Sub CompareFiles()
         If OriginalStrings.Count <> TranslatedStrings.Count Then
             Dim MissingStrings As Integer = OriginalStrings.Count - TranslatedStrings.Count
-            MsgBox(MissingStrings)
-
-            MessageBox.Show("This translation has not the correct number of strings. Some strings may no longer exist in the english version, or maybe there are missing strings." & vbNewLine & vbNewLine & "Start the server, do /tardisadmin language " & LanguageFilesListBox.SelectedItem & " and restart the server. TARDIS plugin will update the translation file with the latest strings.", "", MessageBoxButton.OK, MessageBoxImage.Error)
+            If MissingStrings > 0 Then
+            MsgBox("The translation is missing " & MissingStrings & "strings.")
+            ElseIf MissingStrings < 0
+            MsgBox("This translation has " & MissingStrings * -1 & "additional(s) string(s)."
+            End If
+            MessageBox.Show("This translation does not have the right number of strings. Some strings may no longer exist in the english version, or maybe there are missing strings." & vbNewLine & vbNewLine & "Start the server, do /tardisadmin language " & LanguageFilesListBox.SelectedItem & " and restart the server. TARDIS plugin will update the translation file with the latest strings.", "", MessageBoxButton.OK, MessageBoxImage.Error)
         End If
     End Sub
 
@@ -245,7 +248,7 @@
     End Sub
 
     Private Sub GoToString(ByVal StringNumber As Integer)
-        If StringNumber <= OriginalStrings.Count Or StringNumber >= 0 Then
+        If StringNumber>=0 and StringNumber <= OriginalStrings.Count Then
             CurrentString = StringNumber
             OriginalString.Text = OriginalStrings(CurrentString)
             TranslatedString.Text = TranslatedStrings(CurrentString)
