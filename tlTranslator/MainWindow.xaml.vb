@@ -194,12 +194,14 @@
     Private Sub CompareFiles()
         If OriginalStrings.Count <> TranslatedStrings.Count Then
             Dim MissingStrings As Integer = OriginalStrings.Count - TranslatedStrings.Count
+            Dim addToMessageBox As String
+
             If MissingStrings > 0 Then
-            MsgBox("The translation is missing " & MissingStrings & "strings.")
-            ElseIf MissingStrings < 0
-            MsgBox("This translation has " & MissingStrings * -1 & "additional(s) string(s)."
+                addToMessageBox = "It is missing " & MissingStrings & " strings."
+            ElseIf MissingStrings < 0 Then
+                addToMessageBox = "It has " & MissingStrings * -1 & " additional(s) string(s)."
             End If
-            MessageBox.Show("This translation does not have the right number of strings. Some strings may no longer exist in the english version, or maybe there are missing strings." & vbNewLine & vbNewLine & "Start the server, do /tardisadmin language " & LanguageFilesListBox.SelectedItem & " and restart the server. TARDIS plugin will update the translation file with the latest strings.", "", MessageBoxButton.OK, MessageBoxImage.Error)
+            MessageBox.Show("This translation does not have the right number of strings. " & addToMessageBox & vbNewLine & vbNewLine & "Start the server, do ""/tardisadmin language " & LanguageFilesListBox.SelectedItem & """ and restart the server. TARDIS plugin will update the translation file with the latest strings.", "", MessageBoxButton.OK, MessageBoxImage.Error)
         End If
     End Sub
 
