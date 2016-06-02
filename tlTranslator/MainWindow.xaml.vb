@@ -1,4 +1,21 @@
-﻿Class MainWindow
+﻿
+' Copyright(C) 2016 vistaero
+'
+' This program Is free software: you can redistribute it And/Or modify
+' it under the terms Of the GNU General Public License As published by
+' the Free Software Foundation, either version 3 Of the License, Or
+' (at your option) any later version.
+
+' This program Is distributed In the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty Of
+' MERCHANTABILITY Or FITNESS FOR A PARTICULAR PURPOSE. See the
+' GNU General Public License for more details.
+'
+' You should have received a copy of the GNU General Public License
+' along with this program. If Not, see <http://www.gnu.org/licenses/>.
+
+
+Class MainWindow
 
     Private MessageBox As New Xceed.Wpf.Toolkit.MessageBox
 
@@ -35,8 +52,6 @@
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
-
-
 
     End Sub
 
@@ -246,11 +261,10 @@
             PlaceTheCaret()
         End If
 
-
     End Sub
 
     Private Sub GoToString(ByVal StringNumber As Integer)
-        If StringNumber>=0 and StringNumber <= OriginalStrings.Count Then
+        If StringNumber >= 0 And StringNumber <= OriginalStrings.Count Then
             CurrentString = StringNumber
             OriginalString.Text = OriginalStrings(CurrentString)
             TranslatedString.Text = TranslatedStrings(CurrentString)
@@ -290,7 +304,12 @@
     Private Sub PlaceTheCaret()
         Dim split As String() = TranslatedString.Text.Split(New [Char]() {":"c})
         For Each s As String In split
-            TranslatedString.CaretIndex = s.Length + 3
+            If TranslatedString.Text.EndsWith("""") Then
+                TranslatedString.CaretIndex = s.Length + 3
+            Else
+                TranslatedString.CaretIndex = s.Length + 2
+            End If
+
             Exit For
 
         Next
@@ -324,7 +343,8 @@
     End Sub
 
     Private Sub AboutButton_Click(sender As Object, e As RoutedEventArgs) Handles AboutButton.Click
-        MessageBox.Show("Made by vistaero. You can contact me via Telegram. @vistaero" & vbNewLine & vbNewLine & "Source code: https://github.com/vistaero/TardisPluginLanguageFileTranslator", "About", MessageBoxButton.OK, MessageBoxImage.Information)
+        Dim AboutBox As New About
+        AboutBox.Show()
 
     End Sub
 
@@ -339,7 +359,6 @@
                 Case Else
                     e.Cancel = True
                     Exit Select
-
 
             End Select
 
@@ -359,9 +378,6 @@
 
             ListFiles()
         End If
-
-
-
 
     End Sub
 
