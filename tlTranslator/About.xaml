@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:tlTranslator"
         mc:Ignorable="d"
-        Title="About" Height="353" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="About" Height="376" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="ico.ico">
     <Grid>
         <StackPanel Orientation="Vertical">
             <Image Source="icon.png" HorizontalAlignment="Center" Width="128" Margin="83,20,65,5" />
             <Label Margin="0 0 0 0" FontFamily="Calibri Light" FontSize="22" HorizontalAlignment="Center" Content="tlTranslator" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
             <TextBlock Margin="0" FontFamily="Calibri Light" TextWrapping="Wrap" FontSize="16" TextAlignment="Center" Text="Language file translator utility for CraftBukkit TARDIS Plugin" Width="274" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-            <TextBlock x:Name="VersionNumber" HorizontalAlignment="Center" Margin="10,10" FontFamily="Calibri Light" FontSize="16" Text="Version" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-            <TextBlock Margin="0" FontFamily="Calibri Light" TextWrapping="Wrap" FontSize="16" TextAlignment="Center" Width="274" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"><Run Text="Made by vistaero"/><LineBreak/><Hyperlink x:Name="SourceCodeLink"><Run Text="View Source Code"/></Hyperlink></TextBlock>
+            <TextBlock x:Name="VersionNumberLabel" HorizontalAlignment="Center" Margin="10,10" FontFamily="Calibri Light" FontSize="16" Text="Version" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+            <TextBlock Margin="0" FontFamily="Calibri Light" TextWrapping="Wrap" FontSize="16" TextAlignment="Center" Width="274" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"><Run Text="Made by "/><Hyperlink x:Name="ContactVistaeroLink"><Run Text="vistaero"/></Hyperlink><LineBreak/><Hyperlink x:Name="SourceCodeLink"><Run Text="View Source Code"/></Hyperlink><LineBreak/><Hyperlink x:Name="KeyboardIconsRefer"><Run Text="Keyboard Icons by Chromatix"/></Hyperlink></TextBlock>
 
 
 

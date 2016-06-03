@@ -1,0 +1,26 @@
+﻿<Window x:Class="NewVersionInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:tlTranslator"
+        mc:Ignorable="d"
+        Title="Update tlTranslator" Height="400" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+    <DockPanel>
+
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="10 10" HorizontalAlignment="Right">
+            <Button x:Name="UpdateButton" Margin="10 0" Content="Update" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"/>
+            <Button x:Name="NotNowButton" Margin="0 0" Content="Not now" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="75"/>
+        </StackPanel>
+
+        <StackPanel DockPanel.Dock="Bottom">
+        <TextBlock Margin="10" FontFamily="Calibri Light" TextWrapping="Wrap" FontSize="22" TextAlignment="Left" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"><Run Text="There's a new version available for download"/><Run Text="."/></TextBlock>
+        <WebBrowser x:Name="textBox" Margin="10 0" Height="279" Source="http://vistaero.github.io/TlTranslator/"/>
+            
+        </StackPanel>
+
+        
+
+    </DockPanel>
+    
+</Window>

@@ -16,17 +16,24 @@
 Imports System.Deployment.Application
 
 Public Class About
-    Private Sub About_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-        Try
-            VersionNumber.Text = "Version: " & ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString
-        Catch ex As Exception
-            VersionNumber.Text = "Debug Version"
-        End Try
 
+    Public Sub New(ByVal versionNumber As String)
+
+        InitializeComponent()
+
+        VersionNumberLabel.Text = versionNumber
     End Sub
 
     Private Sub SourceCodeLink_Click(sender As Object, e As RoutedEventArgs) Handles SourceCodeLink.Click
         Process.Start("https://github.com/vistaero/TardisPluginLanguageFileTranslator")
 
+    End Sub
+
+    Private Sub KeyboardIconsRefer_Click(sender As Object, e As RoutedEventArgs) Handles KeyboardIconsRefer.Click
+        Process.Start("http://www.iconarchive.com/show/keyboard-keys-icons-by-chromatix.2.html")
+    End Sub
+
+    Private Sub ContactVistaeroLink_Click(sender As Object, e As RoutedEventArgs) Handles ContactVistaeroLink.Click
+        Process.Start("http://telegram.me/vistaero")
     End Sub
 End Class

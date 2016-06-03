@@ -1,0 +1,54 @@
+﻿<Window x:Class="Help"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:tlTranslator"
+        mc:Ignorable="d"
+        Title="Help" Height="271.541" Width="592.785" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="ico.ico">
+    <StackPanel Orientation="Horizontal" Margin="10">
+        <StackPanel Width="288">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="media/arrow-up-icon.png" Width="64" Height="70"/>
+                    <TextBlock VerticalAlignment="Center" Margin="10">Go to next string</TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="media/ctrl-icon.png" Width="64" Height="70"/>
+                    <Image Source="media/arrow-down-icon.png" Width="64" Height="70"/>
+                    <TextBlock VerticalAlignment="Center" Margin="10" TextWrapping="Wrap">Go to previous search result</TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="media/enter-icon.png" Width="64" Height="70"/>
+                    <TextBlock VerticalAlignment="Center" Margin="10" TextWrapping="Wrap" Height="33" Width="210">Jump from search box to the string being translated</TextBlock>
+                </StackPanel>
+
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="media/arrow-down-icon.png" Width="64" Height="70"/>
+                    <TextBlock VerticalAlignment="Center" Margin="10"><Run Text="Go to "/><Run Text="previous"/><Run Text=" string"/></TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="media/ctrl-icon.png" Width="64" Height="70"/>
+                    <Image Source="media/arrow-up-icon.png" Width="64" Height="70"/>
+                    <TextBlock VerticalAlignment="Center" Margin="10">Go to next search result</TextBlock>
+                </StackPanel>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Image Source="media/ctrl-icon.png" Width="64" Height="70"/>
+                <Image Source="media/letter-uppercase-S-icon.png" Width="64" Height="70"/>
+                <TextBlock VerticalAlignment="Center" Margin="10"><Run Text="Save file"/></TextBlock>
+            </StackPanel>
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>

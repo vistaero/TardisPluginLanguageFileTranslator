@@ -15,9 +15,17 @@
 ' along with this program. If Not, see <http://www.gnu.org/licenses/>.
 
 
+Imports System.ComponentModel
+Imports System.Deployment.Application
+Imports System.IO
+Imports System.Net
+
 Class MainWindow
 
     Private MessageBox As New Xceed.Wpf.Toolkit.MessageBox
+
+    Private LatestVersionChecker As New BackgroundWorker
+    Private LatestVersion As String
 
     Private PathSeparator As String = IO.Path.DirectorySeparatorChar
 
@@ -40,6 +48,13 @@ Class MainWindow
     Private TextToSave As String
 
     Private Sub Window_Loaded(sender As Object, e As RoutedEventArgs)
+
+        LatestVersionChecker.WorkerSupportsCancellation = True
+        AddHandler LatestVersionChecker.DoWork, AddressOf BackgroundWorker1_DoWork
+        AddHandler LatestVersionChecker.RunWorkerCompleted, AddressOf LatestVersionChecker1_RunWorkerCompleted
+
+        LatestVersionChecker.RunWorkerAsync()
+
         Try
             If IO.Directory.Exists(My.Settings.languageFolder) Then
                 LanguageFolder = My.Settings.languageFolder
@@ -52,6 +67,54 @@ Class MainWindow
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
+
+    End Sub
+
+    Private Function GetVersionNumber()
+        Dim currentVersion As String
+
+        Try
+            currentVersion = ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString
+        Catch ex As Exception
+            currentVersion = "Debug Version"
+        End Try
+
+        Return currentVersion
+
+    End Function
+
+    Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs)
+
+        Dim address As String = "https://www.dropbox.com/s/1zo7qar8ehst9z6/version.txt?dl=1"
+        Dim client As WebClient = New WebClient()
+        Dim reader As StreamReader = New StreamReader(client.OpenRead(address))
+        LatestVersion = reader.ReadToEnd
+
+    End Sub
+
+    Private ReportNoUpdate As Boolean = False
+
+    Private Sub LatestVersionChecker1_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs)
+        Dim ThisIsReleaseVersion As Boolean = True
+        If GetVersionNumber() = "Debug Version" Then ThisIsReleaseVersion = False
+        Dim ThereIsInternet As Boolean = My.Computer.Network.Ping("108.160.172.238", 10000)
+        Dim LatestVersionEqualsCurrentVersion As Boolean
+        If LatestVersion.Equals(GetVersionNumber()) Then LatestVersionEqualsCurrentVersion = True
+
+        If ThisIsReleaseVersion = False AndAlso ReportNoUpdate = True Then
+            MessageBox.Show("Can't check for updates when using a Debug Version", "tlTranslator Updater", MessageBoxButton.OK, MessageBoxImage.Information)
+            Return
+        End If
+
+        If ThisIsReleaseVersion = True AndAlso ThereIsInternet = True AndAlso LatestVersionEqualsCurrentVersion = True AndAlso ReportNoUpdate = True Then
+            MessageBox.Show("No updates found", "tlTranslator Updater", MessageBoxButton.OK, MessageBoxImage.Information)
+            Return
+        End If
+
+        If ThisIsReleaseVersion = True AndAlso ThereIsInternet = True AndAlso LatestVersionEqualsCurrentVersion = False Then
+            Dim window As New NewVersionInfo
+            window.ShowDialog()
+        End If
 
     End Sub
 
@@ -93,8 +156,6 @@ Class MainWindow
 
                 ListFiles()
                 LoadEnglish()
-
-
 
             Else
                 MessageBox.Show("That's not a valid TARDIS Plugin languages folder. ""en.yml"" is missing.", "Not valid", MessageBoxButton.OK, MessageBoxImage.Error)
@@ -181,20 +242,15 @@ Class MainWindow
                 End If
             Next
 
-            Try
-                OriginalString.Text = OriginalStrings(0)
-                TranslatedString.Text = TranslatedStrings(0)
-
-            Catch ex As Exception
-                MessageBox.Show("File not valid", "Error", MessageBoxButton.OK)
-
-
-            End Try
+            GoToString(0)
 
             NextButton.IsEnabled = True
             PreviousButton.IsEnabled = True
             SaveButton.IsEnabled = True
             CurrentStringLabel.IsEnabled = True
+            SearchBox.IsEnabled = True
+
+
             TotalStringsLabel.Content = OriginalStrings.Count - 1
 
             TranslatedString.Focus()
@@ -230,13 +286,33 @@ Class MainWindow
 
     Private Sub TranslatedString_KeyDown(sender As Object, e As KeyEventArgs) Handles TranslatedString.PreviewKeyDown
         If CurrentLanguage <> "" Then
-            If e.Key = Key.Up Then
-                GoNext()
-            ElseIf e.Key = Key.Down Then
-                GoPrevious()
+
+            If e.Key = Key.Up AndAlso Keyboard.IsKeyDown(Key.LeftCtrl) OrElse Keyboard.IsKeyDown(Key.RightCtrl) Then
+                e.Handled = True
+                NextResult()
+                PlaceTheCaret()
+
+            ElseIf e.Key = Key.Down AndAlso Keyboard.IsKeyDown(Key.LeftCtrl) OrElse Keyboard.IsKeyDown(Key.RightCtrl) Then
+                e.Handled = True
+                PreviousResult()
+                PlaceTheCaret()
+
+            ElseIf e.Key = Key.Enter Then
+                TranslatedString.Focus()
+                PlaceTheCaret()
+
             ElseIf e.Key = Key.S AndAlso (Keyboard.Modifiers And ModifierKeys.Control) = ModifierKeys.Control Then
                 Save()
+
             End If
+
+            If e.Key = Key.Up Then
+                GoNext()
+
+            ElseIf e.Key = Key.Down Then
+                GoPrevious()
+            End If
+
         End If
 
     End Sub
@@ -254,20 +330,12 @@ Class MainWindow
 
     End Sub
 
-    Private Sub CurrentStringLabel_KeyDown(sender As Object, e As KeyEventArgs) Handles CurrentStringLabel.KeyDown
-        If e.Key = Key.Enter Then
-            TranslatedString.Focus()
-
-            PlaceTheCaret()
-        End If
-
-    End Sub
-
     Private Sub GoToString(ByVal StringNumber As Integer)
         If StringNumber >= 0 And StringNumber <= OriginalStrings.Count Then
             CurrentString = StringNumber
             OriginalString.Text = OriginalStrings(CurrentString)
             TranslatedString.Text = TranslatedStrings(CurrentString)
+            CurrentStringLabel.Text = StringNumber
         End If
 
     End Sub
@@ -275,12 +343,8 @@ Class MainWindow
     Private Sub GoNext()
         If CurrentString <> OriginalStrings.Count - 1 Then
             TranslatedStrings(CurrentString) = TranslatedString.Text
-
             CurrentString += 1
-            OriginalString.Text = OriginalStrings(CurrentString)
-
-            TranslatedString.Text = TranslatedStrings(CurrentString)
-            CurrentStringLabel.Text = CurrentString
+            GoToString(CurrentString)
 
             PlaceTheCaret()
         End If
@@ -289,19 +353,17 @@ Class MainWindow
     Private Sub GoPrevious()
         If CurrentString <> 0 Then
             TranslatedStrings(CurrentString) = TranslatedString.Text
-
             CurrentString -= 1
-            OriginalString.Text = OriginalStrings(CurrentString)
-
-            TranslatedString.Text = TranslatedStrings(CurrentString)
-
-            CurrentStringLabel.Text = CurrentString
+            GoToString(CurrentString)
 
             PlaceTheCaret()
         End If
     End Sub
 
     Private Sub PlaceTheCaret()
+
+        TranslatedString.Focus()
+
         Dim split As String() = TranslatedString.Text.Split(New [Char]() {":"c})
         For Each s As String In split
             If TranslatedString.Text.EndsWith("""") Then
@@ -343,7 +405,7 @@ Class MainWindow
     End Sub
 
     Private Sub AboutButton_Click(sender As Object, e As RoutedEventArgs) Handles AboutButton.Click
-        Dim AboutBox As New About
+        Dim AboutBox As New About("Version: " & GetVersionNumber())
         AboutBox.Show()
 
     End Sub
@@ -388,5 +450,107 @@ Class MainWindow
 
     End Sub
 
+    Dim searchResults As New List(Of String)
+    Dim currentResult As Integer = 1
+
+    Private Sub SearchBox_TextChanged(sender As Object, e As TextChangedEventArgs) Handles SearchBox.TextChanged
+
+        searchResults.Clear()
+
+        If SearchBox.Text = "" Then
+            ResultsLabel.Visibility = Visibility.Collapsed
+            PreviousResultButton.Visibility = Visibility.Collapsed
+            NextResultButton.Visibility = Visibility.Collapsed
+            ClearSearchBoxButton.Visibility = Visibility.Collapsed
+
+        Else
+            For Each item As String In OriginalStrings
+                If item.ToLower.Contains(SearchBox.Text.ToLower) Then
+                    searchResults.Add(OriginalStrings.IndexOf(item))
+
+                End If
+
+            Next
+
+            ResultsLabel.Text = currentResult & "/" & searchResults.Count
+            ResultsLabel.Visibility = Visibility.Visible
+            PreviousResultButton.Visibility = Visibility.Visible
+            NextResultButton.Visibility = Visibility.Visible
+            ClearSearchBoxButton.Visibility = Visibility.Visible
+
+            If searchResults.Count > 0 Then
+                currentResult = 1
+                GoToString(searchResults(0))
+            Else
+                currentResult = 0
+                ResultsLabel.Text = currentResult & "/" & searchResults.Count
+            End If
+        End If
+
+    End Sub
+
+    Private Sub PreviousResult()
+        If currentResult > 1 Then
+            currentResult -= 1
+            ResultsLabel.Text = currentResult & "/" & searchResults.Count
+
+            GoToString(searchResults(currentResult - 1))
+        End If
+    End Sub
+
+    Private Sub NextResult()
+        If currentResult < searchResults.Count Then
+            currentResult += 1
+            ResultsLabel.Text = currentResult & "/" & searchResults.Count
+
+            GoToString(searchResults(currentResult - 1))
+        End If
+    End Sub
+
+    Private Sub NextResult_Click(sender As Object, e As RoutedEventArgs) Handles NextResultButton.Click
+        NextResult()
+
+    End Sub
+
+    Private Sub PreviousResult_Click(sender As Object, e As RoutedEventArgs) Handles PreviousResultButton.Click
+        PreviousResult()
+
+    End Sub
+
+    Private Sub ClearSearchBoxButton_Click(sender As Object, e As RoutedEventArgs) Handles ClearSearchBoxButton.Click
+        SearchBox.Text = ""
+    End Sub
+
+    Private Sub SearchBox_PreviewKeyDown(sender As Object, e As KeyEventArgs) Handles SearchBox.PreviewKeyDown
+        If Keyboard.IsKeyDown(Key.LeftCtrl) OrElse Keyboard.IsKeyDown(Key.RightCtrl) Then
+            If e.Key = Key.Up Then
+                e.Handled = True
+                NextResult()
+            ElseIf e.Key = Key.Down Then
+                e.Handled = True
+                PreviousResult()
+
+            End If
+
+        End If
+
+        If e.Key = Key.Enter Then
+            PlaceTheCaret()
+
+        End If
+
+    End Sub
+
+    Private Sub CheckUpdatesButton_Click(sender As Object, e As RoutedEventArgs) Handles CheckUpdatesButton.Click
+        ReportNoUpdate = True
+        If Not LatestVersionChecker.IsBusy Then LatestVersionChecker.RunWorkerAsync()
+
+    End Sub
+
+    Private Sub HelpButton_Click(sender As Object, e As RoutedEventArgs) Handles HelpButton.Click
+        Dim help As New Help
+        help.ShowDialog()
+
+    End Sub
 
 End Class

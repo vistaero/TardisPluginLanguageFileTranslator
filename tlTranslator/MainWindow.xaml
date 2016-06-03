@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:tlTranslator"
         mc:Ignorable="d"
-        Title="TlTranslator" Height="350" Width="570" MinWidth="570" MinHeight="150" WindowStartupLocation="CenterScreen" Icon="ico.ico" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="tlTranslator" Height="350" Width="570" MinWidth="570" MinHeight="150" WindowStartupLocation="CenterScreen" Icon="ico.ico" Loaded="Window_Loaded" Closing="Window_Closing">
     <DockPanel>
         <ToolBar DockPanel.Dock="Top" Height="27" Margin="-10 0 -15 0">
 
@@ -20,7 +20,15 @@
             <Separator/>
             <Button x:Name="SaveButton" IsEnabled="False" ToolTip="Ctrl + S">Save</Button>
             <Separator/>
-            <Button x:Name="AboutButton">About</Button>
+            <Menu Background="{x:Null}" Margin="0 -1 0 0">
+                <MenuItem Header="Help" >
+                    <MenuItem x:Name="HelpButton" Header="Keyboard Shortcuts"/>
+                    <MenuItem x:Name="CheckUpdatesButton" Header="Search Updates"/>
+                    <MenuItem x:Name="AboutButton" Header="About of tlTranslator"/>
+                </MenuItem>
+
+            </Menu>
+
             <Separator/>
 
         </ToolBar>
@@ -89,8 +97,39 @@
                 <TextBlock DockPanel.Dock="Bottom" Margin="3" x:Name="FilePathLabel" FontFamily="Calibri Light" FontSize="14" TextWrapping="Wrap"/>
 
                 <StackPanel DockPanel.Dock="Top">
+                    <DockPanel>
+                        <TextBlock x:Name="ResultsLabel" DockPanel.Dock="Right" Margin="5 3 5 3" Visibility="Visible"/>
+                        <Button x:Name="NextResultButton" DockPanel.Dock="Right" ToolTip="Ctrl + Up" Margin="1 0" Visibility="Collapsed" Background="#FFEEF5FD">
+                            <TextBlock RenderTransformOrigin="0.5,0.5">
+                                <TextBlock.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="90"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </TextBlock.RenderTransform> ▲
+                            </TextBlock>
+                        </Button>
+                        <Button x:Name="PreviousResultButton" DockPanel.Dock="Right" ToolTip="Ctrl + Down" Margin="1 0" Visibility="Collapsed" Background="#FFEEF5FD">
+                            <TextBlock RenderTransformOrigin="0.5,0.5">
+                                <TextBlock.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="90"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </TextBlock.RenderTransform> ▼
+                            </TextBlock>
+                        </Button>
+                        <Button x:Name="ClearSearchBoxButton" Content="X" Width="20" DockPanel.Dock="Right" Visibility="Collapsed" Background="#FFEEF5FD"/>
+                        <TextBlock Margin="5 3 0 3" DockPanel.Dock="Left" Text="Search:" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                        <TextBox x:Name="SearchBox" DockPanel.Dock="Right" Padding="0 2" Text="" Margin="5 0 0 0" IsEnabled="false" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
 
-                    <TextBox x:Name="OriginalString" HorizontalAlignment="Center" BorderThickness="0" IsReadOnly="true" Foreground="Chocolate" Margin="0 5 0 0" FontFamily="Calibri Light" TextWrapping="Wrap" FontSize="16" TextAlignment="Center">Here you will see the string in English.</TextBox>
+                    </DockPanel>
+
+                    <TextBlock x:Name="OriginalString" HorizontalAlignment="Center" Foreground="Chocolate" Margin="0 5 0 0" FontFamily="Calibri Light" TextWrapping="Wrap" FontSize="16" TextAlignment="Center">Here you will see the string in English.</TextBlock>
 
                     <TextBox x:Name="TranslatedString" Margin="0 5 0 0" BorderThickness="0" FontFamily="Calibri Light" TextWrapping="Wrap" FontSize="16" TextAlignment="Center">Here you will write the translation.</TextBox>
                 </StackPanel>
